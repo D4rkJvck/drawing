@@ -15,7 +15,7 @@ pub struct Point {
 }
 
 impl Point {
-    pub fn new(x: i32, y: i32) -> Self {
+    pub fn new(x: i32, y: i32) -> Point {
         Point { x, y }
     }
 
@@ -29,7 +29,7 @@ impl Point {
 }
 
 impl Drawable for Point {   
-    fn draw(&mut self) {
+    fn draw(&self) {
         
     }
     
@@ -46,26 +46,26 @@ impl Drawable for Point {
 
 //////////////////////////////////////////////////////////////
 
-pub struct Line<'a> {
-    pt_a: &'a Point,
-    pt_b: &'a Point,
+pub struct Line {
+    pt_a: Point,
+    pt_b: Point,
 }
 
-impl<'a> Line<'a> {
-    pub fn new(pt_a: &'a Point, pt_b: &'a Point) -> Self {
+impl Line {
+    pub fn new(pt_a: Point, pt_b: Point) -> Line {
         Line { pt_a, pt_b }
     }
 
     pub fn get_pt_a(&self) -> &Point {
-        self.pt_a
+        &self.pt_a
     }
 
     pub fn get_pt_b(&self) -> &Point {
-        self.pt_b
+        &self.pt_b
     }
 }
 
-impl<'a> Drawable for Line<'a> {
+impl Drawable for Line {
     fn draw(&self) {
 
     }
@@ -75,7 +75,7 @@ impl<'a> Drawable for Line<'a> {
     }
 }
 
-impl<'a> Displayable for Line<'a> {
+impl Displayable for Line {
     fn display(&self) {
 
     }
@@ -83,31 +83,31 @@ impl<'a> Displayable for Line<'a> {
 
 ////////////////////////////////////////////////////////////////
 
-pub struct Triangle<'a> {
-    pt_a: &'a Point,
-    pt_b: &'a Point,
-    pt_c: &'a Point,
+pub struct Triangle {
+    pt_a: Point,
+    pt_b: Point,
+    pt_c: Point,
 }
 
-impl<'a> Triangle<'a> {
-    pub fn new(pt_a: &'a Point, pt_b: &'a Point, pt_c: &'a Point) -> Self {
+impl Triangle {
+    pub fn new(pt_a: Point, pt_b: Point, pt_c: Point) -> Self {
         Triangle { pt_a, pt_b, pt_c }
     }
 
     pub fn get_pt_a(&self) -> &Point {
-        self.pt_a
+        &self.pt_a
     }
 
     pub fn get_pt_b(&self) -> &Point {
-        self.pt_b
+        &self.pt_b
     }
 
     pub fn get_pt_c(&self) -> &Point {
-        self.pt_c
+        &self.pt_c
     }
 }
 
-impl<'a> Drawable for Triangle<'a> {
+impl Drawable for Triangle {
     fn draw(&self) {
 
     }
@@ -117,7 +117,7 @@ impl<'a> Drawable for Triangle<'a> {
     }
 }
 
-impl<'a> Displayable for Triangle<'a> {
+impl Displayable for Triangle {
     fn display(&self) {
 
     }
@@ -125,26 +125,26 @@ impl<'a> Displayable for Triangle<'a> {
 
 ////////////////////////////////////////////////////////////////
 
-pub struct Rectangle<'a> {
-    pt_a: &'a Point,
-    pt_b: &'a Point,
+pub struct Rectangle {
+    pt_a: Point,
+    pt_b: Point,
 }
 
-impl<'a> Rectangle<'a> {
-    pub fn new(pt_a: &'a Point, pt_b: &'a Point) -> Self {
+impl Rectangle {
+    pub fn new(pt_a: Point, pt_b: Point) -> Self {
         Rectangle { pt_a, pt_b }
     }
 
     pub fn get_pt_a(&self) -> &Point {
-        self.pt_a
+        &self.pt_a
     }
 
     pub fn get_pt_b(&self) -> &Point {
-        self.pt_b
+        &self.pt_b
     }
 }
 
-impl<'a> Drawable for Rectangle<'a> {
+impl Drawable for Rectangle {
     fn draw(&self) {
         
     }
@@ -154,7 +154,7 @@ impl<'a> Drawable for Rectangle<'a> {
     }
 }
 
-impl<'a> Displayable for Rectangle<'a> {
+impl Displayable for Rectangle {
     fn display(&self) {
         
     }
@@ -162,18 +162,18 @@ impl<'a> Displayable for Rectangle<'a> {
 
 ///////////////////////////////////////////////////////////////////
  
-pub struct Circle<'a> {
-    center: &'a Point,
+pub struct Circle {
+    center: Point,
     radius: i32
 }
 
-impl<'a> Circle<'a> {
-    pub fn new (center: &'a Point, radius: i32) -> Self {
+impl Circle {
+    pub fn new (center: Point, radius: i32) -> Self {
         Circle { center, radius }
     }
 
     pub fn get_center(&self) -> &Point {
-        self.center
+        &self.center
     }
 
     pub fn get_radius(&self) -> i32 {
@@ -181,7 +181,7 @@ impl<'a> Circle<'a> {
     }
 }
 
-impl<'a> Drawable for Circle<'a> {
+impl Drawable for Circle {
     fn draw(&self) {
         
     }
@@ -191,7 +191,7 @@ impl<'a> Drawable for Circle<'a> {
     }
 }
 
-impl<'a> Displayable for Circle<'a> {
+impl Displayable for Circle {
     fn display(&self) {
         
     }
