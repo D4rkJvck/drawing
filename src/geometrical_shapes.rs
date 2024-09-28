@@ -114,7 +114,7 @@ impl Triangle {
         Triangle { pt_a, pt_b, pt_c }
     }
 }
-
+// pour trinagle étant donné qu'on a trois point on les join avec 3 lignes 
 impl Drawable for Triangle {
     fn draw(&self, img: &mut Image) {
         Line::new(self.pt_a.clone(), self.pt_b.clone()).draw(img);
@@ -123,7 +123,7 @@ impl Drawable for Triangle {
     }
 
     fn color(&self) -> Color {
-        Color::rgb(0, 0, 255) // Bleu
+        Color::rgb(0, 0, 255) 
     }
 }
 
