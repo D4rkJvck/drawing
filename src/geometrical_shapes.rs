@@ -3,7 +3,7 @@ use raster::{Image, Color};
 
 pub trait Drawable {
     fn draw(&self, img: &mut Image);
-    fn color(&self) -> Color; // Retourne une couleur aléatoire pour chaque forme
+    fn color(&self) -> Color; 
 }
 
 pub trait Displayable {
@@ -13,12 +13,14 @@ pub trait Displayable {
 ///////// // for _ in 1..50 {
     //     gs::Circle::random(image.width, image.height).draw(&mut image);
     // }
-///////////////////////////////////////////////////////////////////////////////
+//[POINT]/////////////////////////////////////////////////////////////////////////////
 
+#[derive(Clone)]
 pub struct Point {
     x: i32,
     y: i32,
 }
+
 
 impl Point {
     pub fn new(x: i32, y: i32) -> Point {
@@ -44,7 +46,7 @@ impl Drawable for Point {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+//[LINE]///////////////////////////////////////////////////////////////////////////////////////
 
 pub struct Line {
     pt_a: Point,
@@ -97,74 +99,80 @@ impl Drawable for Line {
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+//[TRIANGLE]///////////////////////////////////////////////////////////////////////////////
 
-// pub struct Triangle {
-//     pt_a: Point,
-//     pt_b: Point,
-//     pt_c: Point,
-// }
 
-// impl Triangle {
-//     pub fn new(pt_a: Point, pt_b: Point, pt_c: Point) -> Self {
-//         let a = pt_a;
-        
-//         Triangle { pt_a, pt_b, pt_c }
-//     }
-// }
 
-// impl Drawable for Triangle {
-//     fn draw(&self, _: &mut Image) {
-        
-//     }
+pub struct Triangle {
+    pt_a: Point,
+    pt_b: Point,
+    pt_c: Point,
+}
 
-//     fn color(&self) {}
-// }
+impl Triangle {
+    pub fn new(pt_a: Point, pt_b: Point, pt_c: Point) -> Self {        
+        Triangle { pt_a, pt_b, pt_c }
+    }
+}
 
-// /////////////////////////////////////////////////////////////////////////////////
+impl Drawable for Triangle {
+    fn draw(&self, img: &mut Image) {
+        Line::new(self.pt_a.clone(), self.pt_b.clone()).draw(img);
+        Line::new(self.pt_b.clone(), self.pt_c.clone()).draw(img);
+        Line::new(self.pt_c.clone(), self.pt_a.clone()).draw(img);
+    }
 
-// pub struct Rectangle {
-//     pt_a: Point,
-//     pt_b: Point,
-// }
+    fn color(&self) -> Color {
+        Color::rgb(0, 0, 255) // Bleu
+    }
+}
 
-// impl Rectangle {
-//     pub fn new(pt_a: Point, pt_b: Point) -> Self {
-//         Rectangle { pt_a, pt_b }
-//     }
+///[RECTANGLE]//////////////////////////////////////////////////////////////////////////////
 
-// }
+pub struct Rectangle {
+    pt_a: Point,
+    pt_b: Point,
+}
 
-// impl Drawable for Rectangle {
-//     fn draw(&self, _: &mut Image) {}
+impl Rectangle {
+    pub fn new(pt_a: Point, pt_b: Point) -> Self {
+        Rectangle { pt_a, pt_b }
+    }
 
-//     fn color(&self) {}
-// }
+}
 
-// ////////////////////////////////////////////////////////////////////////////////////
+impl Drawable for Rectangle {
+    fn draw(&self, _: &mut Image) {}
 
-// pub struct Circle {
-//     center: Point,
-//     radius: i32,
-// }
+    fn color(&self) -> Color {
+        Color::rgb(127, 255, 0)
+    }
+}
 
-// impl Circle {
-//     pub fn new(center: Point, radius: i32) -> Self {
-//         Circle { center, radius }
-//     }
+///[CIRCLE]//////////////////////////////////////////////////////////////////////////////////
 
-//     pub fn random(x: i32, y: i32) -> Circle {
-//         let radius = rand::thread_rng().gen_range(1..=y);
-//         Circle::new(Point::new(x, y), radius)
-//     }
-// }
+pub struct Circle {
+    center: Point,
+    radius: i32,
+}
 
-// impl Drawable for Circle {
-//     fn draw(&self, _: &mut Image) {
+impl Circle {
+    pub fn new(center: Point, radius: i32) -> Self {
+        Circle { center, radius }
+    }
 
-//     }
+    pub fn random(x: i32, y: i32) -> Circle {
+        let radius = rand::thread_rng().gen_range(1..=y);
+        Circle::new(Point::new(x, y), radius)
+    }
+}
+
+impl Drawable for Circle {
+    fn draw(&self, _: &mut Image) {
+
+    }
     
-//     fn color(&self) {
-
-//     }
-// }
+    fn color(&self) -> Color {
+        Color::rgb(255, 127, 0)
+    }
+}
