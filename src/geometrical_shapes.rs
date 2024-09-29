@@ -10,11 +10,13 @@ pub trait Displayable {
     fn display(&mut self, x: i32, y: i32, clr: Color);
 }
 
-///////// // for _ in 1..50 {
-    //     gs::Circle::random(image.width, image.height).draw(&mut image);
-    // }
-//[POINT]/////////////////////////////////////////////////////////////////////////////
+fn random_color() -> Color {
+    let mut rng = rand::thread_rng();
+    Color::rgb(rng.gen_range(0..=255), rng.gen_range(0..=255), rng.gen_range(0..=255))
+}
 
+
+//[POINT]//////////////////////////
 #[derive(Clone)]
 pub struct Point {
     x: i32,
@@ -35,18 +37,17 @@ impl Point {
     }
 }
 
-// j'ai choisi rouge pour creer aléatoirement les point
 impl Drawable for Point {
     fn draw(&self, img: &mut Image) {
         img.display(self.x, self.y, self.color());
     }
 
     fn color(&self) -> Color {
-        Color::rgb(255, 0, 0) 
+        random_color() 
     }
 }
 
-//[LINE]///////////////////////////////////////////////////////////////////////////////////////
+//[LINE]///////////////////////
 
 pub struct Line {
     pt_a: Point,
@@ -75,7 +76,7 @@ impl Drawable for Line {
         let mut y = self.pt_a.y;
 
         loop {
-            img.display(x, y, self.color());
+            img.display(x, y, self.color().clone());
 
             if x == self.pt_b.x && y == self.pt_b.y {
                 break;
@@ -95,13 +96,11 @@ impl Drawable for Line {
     }
 
     fn color(&self) -> Color {
-        Color::rgb(0, 255, 0)
+        random_color() // Couleur aléatoire pour chaque ligne
     }
 }
 
-//[TRIANGLE]///////////////////////////////////////////////////////////////////////////////
-
-
+//[TRIANGLE]//////////////////
 
 pub struct Triangle {
     pt_a: Point,
@@ -123,11 +122,11 @@ impl Drawable for Triangle {
     }
 
     fn color(&self) -> Color {
-        Color::rgb(0, 0, 255) 
+        random_color()
     }
 }
 
-///[RECTANGLE]//////////////////////////////////////////////////////////////////////////////
+///[RECTANGLE]///////////////////
 
 pub struct Rectangle {
     pt_a: Point,
@@ -135,21 +134,31 @@ pub struct Rectangle {
 }
 
 impl Rectangle {
-    pub fn new(pt_a: Point, pt_b: Point) -> Self {
-        Rectangle { pt_a, pt_b }
+    pub fn new(pt_a: &Point, pt_b: &Point) -> Self {
+        Rectangle {
+            pt_a: pt_a.clone(),
+            pt_b: pt_b.clone(),
+        }
     }
-
 }
 
 impl Drawable for Rectangle {
-    fn draw(&self, _: &mut Image) {}
+    fn draw(&self, img: &mut Image) {
+        let pt_c = Point::new(self.pt_a.x, self.pt_b.y);
+        let pt_d = Point::new(self.pt_b.x, self.pt_a.y);
+
+        Line::new(self.pt_a.clone(), pt_c.clone()).draw(img);
+        Line::new(pt_c.clone(), self.pt_b.clone()).draw(img);
+        Line::new(self.pt_b.clone(), pt_d.clone()).draw(img);
+        Line::new(pt_d.clone(), self.pt_a.clone()).draw(img);
+    }
 
     fn color(&self) -> Color {
-        Color::rgb(127, 255, 0)
+        random_color()
     }
 }
 
-///[CIRCLE]//////////////////////////////////////////////////////////////////////////////////
+///[CIRCLE]////////////////////
 
 pub struct Circle {
     center: Point,
@@ -157,22 +166,33 @@ pub struct Circle {
 }
 
 impl Circle {
-    pub fn new(center: Point, radius: i32) -> Self {
-        Circle { center, radius }
+    pub fn new(center: &Point, radius: i32) -> Self {
+        Circle {
+            center: center.clone(),
+            radius,
+        }
     }
 
-    pub fn random(x: i32, y: i32) -> Circle {
-        let radius = rand::thread_rng().gen_range(1..=y);
-        Circle::new(Point::new(x, y), radius)
+    pub fn random(width: i32, height: i32) -> Circle {
+        let center = Point::random(width, height);
+        let radius = rand::thread_rng().gen_range(1..=50);
+        Circle::new(&center, radius)
     }
 }
 
 impl Drawable for Circle {
-    fn draw(&self, _: &mut Image) {
-
+    fn draw(&self, img: &mut Image) {
+        let color = self.color();
+        for x in -self.radius..=self.radius {
+            for y in -self.radius..=self.radius {
+                if x * x + y * y <= self.radius * self.radius {
+                    img.display(self.center.x + x, self.center.y + y, color.clone());
+                }
+            }
+        }
     }
-    
+
     fn color(&self) -> Color {
-        Color::rgb(255, 127, 0)
+        random_color()
     }
 }
