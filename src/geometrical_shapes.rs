@@ -142,15 +142,14 @@ impl Rectangle {
 }
 
 impl Drawable for Rectangle {
-    // on creer quatre point a b c d doit les extrémié du rectangle et avec Line on relie les points formant ainsi notre Rectangle
     fn draw(&self, img: &mut Image) {
-        let c = Point::new(self.a.x, self.b.y);
-        let pt_d = Point::new(self.b.x, self.a.y);
+        let c = Point::new(self.b.x, self.a.y);
+        let d = Point::new(self.a.x, self.b.y);
 
         Line::new(self.a.clone(), c.clone()).draw(img);
         Line::new(c.clone(), self.b.clone()).draw(img);
-        Line::new(self.b.clone(), pt_d.clone()).draw(img);
-        Line::new(pt_d.clone(), self.a.clone()).draw(img);
+        Line::new(self.b.clone(), d.clone()).draw(img);
+        Line::new(d.clone(), self.a.clone()).draw(img);
     }
 
     fn color(&self) -> Color {
@@ -184,12 +183,13 @@ impl Circle {
 impl Drawable for Circle {
     fn draw(&self, img: &mut Image) {
         let color = self.color();
-        for x in -self.radius..=self.radius {
-            for y in -self.radius..=self.radius {
-                if x * x + y * y <= self.radius * self.radius {
-                    img.display(self.center.x + x, self.center.y + y, color.clone());
-                }
-            }
+        let mut angle = 0.0;
+
+        while angle < 2.0 * std::f64::consts::PI {
+            let x = self.center.x + (self.radius as f64 * angle.cos()) as i32;
+            let y = self.center.y + (self.radius as f64 * angle.sin()) as i32;
+            img.display(x, y, color.clone());
+            angle += 0.01; 
         }
     }
 
@@ -197,6 +197,7 @@ impl Drawable for Circle {
         random_color()
     }
 }
+
 
 
 ///[PENTAGON]////////////////////
