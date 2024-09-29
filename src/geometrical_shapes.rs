@@ -197,3 +197,47 @@ impl Drawable for Circle {
         random_color()
     }
 }
+
+
+///[PENTAGON]////////////////////
+pub struct Pentagon {
+    points: Vec<Point>,
+}
+
+impl Pentagon {
+    pub fn new(center: &Point, radius: i32) -> Self {
+        let mut points = vec![];
+        let angle_step = std::f64::consts::PI * 2.0 / 5.0;
+
+        for i in 0..5 {
+            let angle = angle_step * i as f64;
+            let x = center.x + (radius as f64 * angle.cos()) as i32;
+            let y = center.y + (radius as f64 * angle.sin()) as i32;
+            points.push(Point::new(x, y));
+        }
+
+        Pentagon { points }
+    }
+
+    pub fn random(width: i32, height: i32) -> Pentagon {
+        let center = Point::random(width, height);
+        let radius = rand::thread_rng().gen_range(30..=100);
+        Pentagon::new(&center, radius)
+    }
+}
+
+impl Drawable for Pentagon {
+    fn draw(&self, img: &mut Image) {
+        let mut points = self.points.clone();
+        points.push(points[0].clone()); 
+
+        for i in 0..points.len() - 1 {
+            Line::new(points[i].clone(), points[i + 1].clone()).draw(img);
+        }
+    }
+
+    fn color(&self) -> Color {
+        random_color()
+    }
+}
+
