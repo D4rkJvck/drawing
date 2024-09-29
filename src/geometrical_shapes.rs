@@ -96,7 +96,7 @@ impl Drawable for Line {
     }
 
     fn color(&self) -> Color {
-        random_color() // Couleur aléatoire pour chaque ligne
+        random_color() 
     }
 }
 
@@ -113,7 +113,7 @@ impl Triangle {
         Triangle { pt_a, pt_b, pt_c }
     }
 }
-// pour trinagle étant donné qu'on a trois point on les join avec 3 lignes 
+// pour triangle étant donné qu'on a trois point on les joint avec 3 lignes 
 impl Drawable for Triangle {
     fn draw(&self, img: &mut Image) {
         Line::new(self.pt_a.clone(), self.pt_b.clone()).draw(img);
@@ -127,7 +127,6 @@ impl Drawable for Triangle {
 }
 
 ///[RECTANGLE]///////////////////
-
 pub struct Rectangle {
     pt_a: Point,
     pt_b: Point,
@@ -143,6 +142,7 @@ impl Rectangle {
 }
 
 impl Drawable for Rectangle {
+    // on creer quatre point a b c d doit les extrémié du rectangle et avec Line on relie les points formant ainsi notre Rectangle
     fn draw(&self, img: &mut Image) {
         let pt_c = Point::new(self.pt_a.x, self.pt_b.y);
         let pt_d = Point::new(self.pt_b.x, self.pt_a.y);
@@ -179,7 +179,8 @@ impl Circle {
         Circle::new(&center, radius)
     }
 }
-
+// Pour creer le cercle on relie tous les points à l'interieur  d'un carré centré sur le centre du cercle
+// et on vérifie si chaque point est à l'intérieur du cercle en utilisant l'équation de la distance au carré.
 impl Drawable for Circle {
     fn draw(&self, img: &mut Image) {
         let color = self.color();
