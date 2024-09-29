@@ -50,13 +50,13 @@ impl Drawable for Point {
 //[LINE]///////////////////////
 
 pub struct Line {
-    pt_a: Point,
-    pt_b: Point,
+    a: Point,
+    b: Point,
 }
 
 impl Line {
-    pub fn new(pt_a: Point, pt_b: Point) -> Line {
-        Line { pt_a, pt_b }
+    pub fn new(a: Point, b: Point) -> Line {
+        Line { a, b }
     }
 
 
@@ -68,29 +68,29 @@ impl Line {
 
 impl Drawable for Line {
     fn draw(&self, img: &mut Image) {
-        // Pour chaque pixel entre pt_a et pt_b, on affiche la couleur 
-        let dx = (self.pt_b.x - self.pt_a.x).abs();
-        let dy = -(self.pt_b.y - self.pt_a.y).abs();
+        // Pour chaque pixel entre a et b, on affiche la couleur 
+        let dx = (self.b.x - self.a.x).abs();
+        let dy = -(self.b.y - self.a.y).abs();
         let mut err = dx + dy;
-        let mut x = self.pt_a.x;
-        let mut y = self.pt_a.y;
+        let mut x = self.a.x;
+        let mut y = self.a.y;
 
         loop {
             img.display(x, y, self.color().clone());
 
-            if x == self.pt_b.x && y == self.pt_b.y {
+            if x == self.b.x && y == self.b.y {
                 break;
             }
 
             let e2 = 2 * err;
             if e2 >= dy {
                 err += dy;
-                x += if self.pt_a.x < self.pt_b.x { 1 } else { -1 };
+                x += if self.a.x < self.b.x { 1 } else { -1 };
             }
 
             if e2 <= dx {
                 err += dx;
-                y += if self.pt_a.y < self.pt_b.y { 1 } else { -1 };
+                y += if self.a.y < self.b.y { 1 } else { -1 };
             }
         }
     }
@@ -103,22 +103,22 @@ impl Drawable for Line {
 //[TRIANGLE]//////////////////
 
 pub struct Triangle {
-    pt_a: Point,
-    pt_b: Point,
-    pt_c: Point,
+    a: Point,
+    b: Point,
+    c: Point,
 }
 
 impl Triangle {
-    pub fn new(pt_a: Point, pt_b: Point, pt_c: Point) -> Self {        
-        Triangle { pt_a, pt_b, pt_c }
+    pub fn new(a: Point, b: Point, c: Point) -> Self {        
+        Triangle { a, b, c }
     }
 }
 // pour triangle étant donné qu'on a trois point on les joint avec 3 lignes 
 impl Drawable for Triangle {
     fn draw(&self, img: &mut Image) {
-        Line::new(self.pt_a.clone(), self.pt_b.clone()).draw(img);
-        Line::new(self.pt_b.clone(), self.pt_c.clone()).draw(img);
-        Line::new(self.pt_c.clone(), self.pt_a.clone()).draw(img);
+        Line::new(self.a.clone(), self.b.clone()).draw(img);
+        Line::new(self.b.clone(), self.c.clone()).draw(img);
+        Line::new(self.c.clone(), self.a.clone()).draw(img);
     }
 
     fn color(&self) -> Color {
@@ -128,15 +128,15 @@ impl Drawable for Triangle {
 
 ///[RECTANGLE]///////////////////
 pub struct Rectangle {
-    pt_a: Point,
-    pt_b: Point,
+    a: Point,
+    b: Point,
 }
 
 impl Rectangle {
-    pub fn new(pt_a: &Point, pt_b: &Point) -> Self {
+    pub fn new(a: &Point, b: &Point) -> Self {
         Rectangle {
-            pt_a: pt_a.clone(),
-            pt_b: pt_b.clone(),
+            a: a.clone(),
+            b: b.clone(),
         }
     }
 }
@@ -144,13 +144,13 @@ impl Rectangle {
 impl Drawable for Rectangle {
     // on creer quatre point a b c d doit les extrémié du rectangle et avec Line on relie les points formant ainsi notre Rectangle
     fn draw(&self, img: &mut Image) {
-        let pt_c = Point::new(self.pt_a.x, self.pt_b.y);
-        let pt_d = Point::new(self.pt_b.x, self.pt_a.y);
+        let c = Point::new(self.a.x, self.b.y);
+        let pt_d = Point::new(self.b.x, self.a.y);
 
-        Line::new(self.pt_a.clone(), pt_c.clone()).draw(img);
-        Line::new(pt_c.clone(), self.pt_b.clone()).draw(img);
-        Line::new(self.pt_b.clone(), pt_d.clone()).draw(img);
-        Line::new(pt_d.clone(), self.pt_a.clone()).draw(img);
+        Line::new(self.a.clone(), c.clone()).draw(img);
+        Line::new(c.clone(), self.b.clone()).draw(img);
+        Line::new(self.b.clone(), pt_d.clone()).draw(img);
+        Line::new(pt_d.clone(), self.a.clone()).draw(img);
     }
 
     fn color(&self) -> Color {

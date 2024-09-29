@@ -1,0 +1,25 @@
+Functional:
+
+    ✔ Can you confirm that the module `geometrical_shapes` was created? @done(24-09-28)
+
+    Try to run the command `cargo run`.
+
+        ✔ Does the program compile and run without any error or warning? @done(24-09-28)
+
+        ✔ Does the program produce a `png` file called `image.png`? @done(24-09-28)
+
+    Open the module `geometrical_shapes`.
+
+        ✔ Can you confirm that the traits `Displayable` and `Drawable` where created? @done(24-09-28)
+
+    Try to open the `image.png`.
+
+        ! Does the image contain lines, circles, rectangles and triangles? @blocked(24-09-28)
+
+        ✔ Are the shapes drawn with different colors? @done(24-09-28)
+
+Bonus:
+
+    ☐ Can you draw a pentagon?
+
+    ☐ Can you draw a cube?

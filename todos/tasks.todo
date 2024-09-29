@@ -1,0 +1,48 @@
+Module:
+    ✔ `geometrical_shapes` @done(24-09-28)
+
+Traits:
+    ✔ `Drawable` @done(24-09-28)
+    ✔ `Displayable` @done(24-09-28)
+
+Traits Methods:
+    ✔ draw() <- Drawable @done(24-09-28)
+    ✔ color() <- Drawable @done(24-09-28)
+    ✔ display() <- Displayable @done(24-09-28)
+
+Structures:
+    ✔ Point @done(24-09-28) 
+        x -> i32
+        y -> i32
+
+    ✔ Line @done(24-09-28)
+        a -> Point
+        b -> Point
+
+    ✔ Triangle @done(24-09-28)
+        a -> Point
+        b -> Point
+        c -> Point
+        
+    ✔ Rectangle @done(24-09-28)
+        a -> Point
+        b -> Point
+
+    ✔ Circle @done(24-09-28)
+        center -> Point
+        radius -> i32
+
+    ✔ Pentagon @done(24-09-28)
+        a -> Point
+        b -> Point
+        c -> Point
+        d -> Point
+        e -> Point
+
+    ☐ Cube
+        a -> Point
+        b -> Point
+
+Associated Method:
+    ✔ new() -> Point | Line | Triangle | Rectangle | Circle | Pentagon @done(24-09-28)
+    ✔ random() -> Point | Line | Circle @done(24-09-28)
