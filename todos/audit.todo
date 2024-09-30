@@ -14,12 +14,12 @@ Functional:
 
     Try to open the `image.png`.
 
-        ! Does the image contain lines, circles, rectangles and triangles? @blocked(24-09-28)
+        ✔ Does the image contain lines, circles, rectangles and triangles? @done(24-09-29)
 
         ✔ Are the shapes drawn with different colors? @done(24-09-28)
 
 Bonus:
 
-    ☐ Can you draw a pentagon?
+    ✔ Can you draw a pentagon? @done(24-09-28)
 
-    ☐ Can you draw a cube?
+    ✔ Can you draw a cube? @done(24-09-29)

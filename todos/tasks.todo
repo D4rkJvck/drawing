@@ -39,7 +39,7 @@ Structures:
         d -> Point
         e -> Point
 
-    ☐ Cube
+    ✔ Cube @done(24-09-29)
         a -> Point
         b -> Point
 
