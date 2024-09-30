@@ -29,8 +29,8 @@ fn main() {
     }
 
     let cube = gs::Cube::new(
-        gs::Point::new(200, 200),
         gs::Point::new(300, 300),
+        gs::Point::new(350, 350),
         100
     );
     cube.draw(&mut image);
