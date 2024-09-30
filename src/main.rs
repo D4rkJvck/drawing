@@ -23,9 +23,17 @@ fn main() {
 
     let pentagon = gs::Pentagon::random(image.width, image.height);
     pentagon.draw(&mut image);
+
     for _ in 1..50 {
         gs::Circle::random(image.width, image.height).draw(&mut image);
     }
+
+    let cube = gs::Cube::new(
+        gs::Point::new(200, 200),
+        gs::Point::new(300, 300),
+        100
+    );
+    cube.draw(&mut image);
 
     raster::save(&image, "image.png").unwrap();
 }

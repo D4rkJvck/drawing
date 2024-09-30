@@ -242,3 +242,49 @@ impl Drawable for Pentagon {
     }
 }
 
+////////[CUBE]//////////////////////////////////
+
+pub struct Cube {
+    front_square: Rectangle,
+    back_square: Rectangle,
+    connections: Vec<Line>,
+}
+
+impl Cube {
+    pub fn new(front_top_left: Point, back_top_left: Point, side_length: i32) -> Self {
+        let front_bottom_right = Point::new(front_top_left.x + side_length, front_top_left.y + side_length);
+        let back_bottom_right = Point::new(back_top_left.x + side_length, back_top_left.y + side_length);
+
+        let front_square = Rectangle::new(&front_top_left, &front_bottom_right);
+        let back_square = Rectangle::new(&back_top_left, &back_bottom_right);
+
+        let connections = vec![
+            Line::new(front_top_left.clone(), back_top_left.clone()),
+            Line::new(Point::new(front_top_left.x + side_length, front_top_left.y), Point::new(back_top_left.x + side_length, back_top_left.y)),
+            Line::new(Point::new(front_top_left.x, front_top_left.y + side_length), Point::new(back_top_left.x, back_top_left.y + side_length)),
+            Line::new(front_bottom_right.clone(), back_bottom_right.clone()),
+        ];
+
+        Cube {
+            front_square,
+            back_square,
+            connections,
+        }
+    }
+}
+
+impl Drawable for Cube {
+    fn draw(&self, img: &mut Image) {
+        self.front_square.draw(img);
+        self.back_square.draw(img);
+        for connection in &self.connections {
+            connection.draw(img);
+        }
+    }
+
+    fn color(&self) -> Color {
+        random_color()
+    }
+}
+
+
