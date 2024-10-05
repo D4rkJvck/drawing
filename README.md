@@ -59,6 +59,10 @@ note: to see what the problems were, use the option `--future-incompat-report`, 
      Running `target/debug/drawing`
 ```
 
+Then in the image.png in the root:
+
+![Drawings](./image.png)
+
 ## Contributors
 
 [![babacandiaye](https://shields.io/badge/babacandiaye-Zone01-blue)](http://learn.zone01dakar.sn/git/babacandiaye)
