@@ -1,11 +1,20 @@
+//! The Geometrical Shapes module (gs) is the core component of the program.
+//! It contains the definition of necessary traits, strucutures and associated methods for the program to run.
+//! It is used in the main file of the program through the its abbreviation `gs`.
+//! It also import the `Raster` crate with the `Image` and `Color` that are useful for drawing.
+
 use rand::Rng;
 use raster::{Image, Color};
 
+/// This trait will be implemented by the shapes structures.
+/// Obviously, they will have to implement the draw and color methods.
 pub trait Drawable {
     fn draw(&self, img: &mut Image);
     fn color(&self) -> Color; 
 }
 
+/// This trait will be mainly implemented by the Image structure from the Raster crate
+/// that will define the logic of the 
 pub trait Displayable {
     fn display(&mut self, x: i32, y: i32, clr: Color);
 }
